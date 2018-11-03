@@ -1,0 +1,39 @@
+#!/bin/sh
+# Author: @radekcieciwa
+# Description: Set of terminal functions for misc apps
+
+# Convinient method for reveal-app
+reveal_run() {
+	# THEME=""
+	# PDF_FILEPATH=""
+
+	local OPTIND
+	while getopts hp:t: OPTION
+	do
+	    case ${OPTION} in
+	    	h)  echo
+"
+-p -- print pdf to specified file
+-t -- themed version with specified theme
+
+List of themes: beige, black, blood, league, moon, night, serif, simple, sky, solarized, white.
+https://github.com/hakimel/reveal.js/tree/master/css/theme
+";
+				return 1;
+	            ;;
+	        p)  PDF_FILEPATH="${OPTARG}"; # echo "pdf";
+	            ;;
+	        t)  THEME="${OPTARG}"; # echo "theme";
+	            ;;
+	    esac
+	done
+	shift $((OPTIND-1))
+
+	if [ $# -lt 1 ]; then
+		echo "Error: Specify path to markdown file."
+		return 1;
+	fi
+
+	echo "CTRL + C: to quit"
+	reveal-md $1 --separator "^\n----\n" --vertical-separator "^-\n-" ${THEME:+'--theme' "$THEME"} ${PDF_FILEPATH:+'--print' "$PDF_FILEPATH"}
+}

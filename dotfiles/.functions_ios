@@ -1,0 +1,37 @@
+#!/bin/sh
+# Author: @radekcieciwa
+# Description: Set of generic ios terminal functions
+
+# List lines of code for swift and objc
+# Accepts 1 or 2 args
+# $1 - directory to check
+# lizard_swift_and_objc_ios ./Chappy
+# $2 - exclude regexp
+# lizard_swift_and_objc_ios ./Platform "*Proto/*"
+lizard_swift_and_objc_ios() {
+	# if you want to exclude something e.g. Platform/Proto
+	if [ $# -eq 2 ]; then
+		echo "== Swift:"
+		lizard -l swift $1 -x $2| grep 'Total nloc' -A 2;
+		echo "== Objective C:"
+		lizard -l objectivec $1 -x $2 | grep 'Total nloc' -A 2;
+	else
+		# your go to default, no additional args, just initial path, e.g.: Badoo
+		echo "== Swift:"
+		lizard -l swift $1 | grep 'Total nloc' -A 2;
+		echo "== Objective C:"
+		lizard -l objectivec $1 | grep 'Total nloc' -A 2;
+	fi
+}
+
+# Observe logs inside terminal
+observe_simulator_logs() {
+	if [ $# -eq 2 ]; then
+		tail -f ~/Library/Logs/CoreSimulator/$1/system.log | grep $2
+	elif [ $# -eq 1 ]; then
+		tail -f ~/Library/Logs/CoreSimulator/$1/system.log
+	else
+		echo "No simulator found, please use one of Booted ones"
+		xcrun simctl list devices | grep Booted
+	fi
+}

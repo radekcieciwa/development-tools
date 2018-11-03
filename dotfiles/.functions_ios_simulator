@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Author: @radekcieciwa
+# Also, sourced from: https://github.com/dive/dotfiles/blob/master/.development-tools/.simulator
+
+: '
+NOTE: if more than one device is booted then the last booted will be used
+'
+
+# list all devices
+# [devices|devicetypes|runtimes|pairs]
+function ios_sim_list() {
+	xcrun simctl list devices
+}
+
+# -j retreats the list in json
+function ios_sim_list_udid() {
+  xcrun simctl list -j | grep udid | awk '{print $3}' | sed 's/[\"\,]//g'
+}
+
+# Send multimedia file to the booted device
+# You can specify multiple files including a mix of photos, videos, and contacts.
+# You can also specify multiple live photos by providing the photo and video files. They will automatically be discovered and imported correctly.
+# Contacts support the vCard format.
+function ios_sim_add() {
+	xcrun simctl addmedia booted $@
+}
+
+# Records the display of the booted device
+function ios_sim_record() {
+	FILENAME="${HOME}/Desktop/$(uuidgen).mp4"
+	say @green"Recording to $FILENAME"@reset
+	say @blue"Press Ctrl+C to stop recording..."@reset
+	xcrun simctl io booted recordVideo $FILENAME
+}
+
+# take a screenshot of the booted device
+function ios_sim_screenshot() {
+	FILENAME="${HOME}/Desktop/$(uuidgen).png"
+	say @green"Taking screenshot to $FILENAME"@reset
+	xcrun simctl io booted screenshot $FILENAME
+}
+
+# open an URL in the booted device
+function ios_sim_open_url() {
+	xcrun simctl openurl booted $1
+}
+
+# copy standard input onto the device pasteboard.
+function ios_sim_copy_to() {
+	if [ -n "$1" ]; then
+		pbcopy $1
+	fi
+	xcrun simctl pbcopy booted
+}
+
+# print the contents of the device's pasteboard to standard output
+function ios_sim_pasteboard_print() {
+	xcrun simctl pbpaste booted
+}

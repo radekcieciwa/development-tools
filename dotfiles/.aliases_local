@@ -1,0 +1,30 @@
+#!/bin/sh
+# Author: @radekcieciwa
+# Description: Set of locally useful aliases I use daily
+
+alias addkey="ssh-add -K ~/.ssh/id_rsa; ssh-add -K ~/.ssh/rcgh_id_rsa; ssh-add -K ~/.ssh/bb_id_rsa;"
+
+# APPS DIRECTORIES
+alias ddboo="cd ~/Development/iOS/Badoo"
+alias dddev="cd ~/Development"
+alias dddiags="cd ~/Development/Diagrams"
+alias ddxcode="cd ~/Library/Developer/Xcode"
+alias ddslides="cd ~/Slides"
+alias ddscripts="cd ~/Development/scripting"
+
+# APPLICATION INSIDE WORKING COPY
+alias badoo="qrun Badoo/Badoo.xcworkspace"
+alias moxie="qrun Bumble/Moxie.xcworkspace"
+alias chappy="qrun Chappy/Chappy.xcworkspace"
+alias encounters="qrun Platform/Features/Encounters/project.xcworkspace"
+alias badoo_all="qrun Dev.xcworkspace"
+alias domain="qrun Platform/Domain/manualProject/Domain.xcworkspace"
+
+# BADOO's AUTOMATION
+alias badoo_static_analysis="BUNDLE_GEMFILE=.fastlane/Gemfile.fastlane bundle exec fastlane analyse teamcity:false app:badoo xcode:9.3 check_clang_bugs:false"
+alias switch_team_qa="fastlane switch_dev_team team:1"
+alias switch_team_default="fastlane switch_dev_team team:default"
+
+# BADOO's CERTS
+alias update-certs-preliminary-call="sudo BUNDLE_GEMFILE=.fastlane/Gemfile.fastlane bundle install"
+alias update-certs="BUNDLE_GEMFILE=.fastlane/Gemfile.fastlane bundle exec fastlane install_all_certs"

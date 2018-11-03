@@ -1,0 +1,41 @@
+#!/bin/sh
+# Author: @radekcieciwa
+# Description: Set of useful aliases I use daily
+
+# BASH SUGAR
+alias column_1="awk '{ print $1 }'"
+
+# PROFILE FILE HELPERS
+alias profile-edit="sublime ~/.bash_profile"
+alias profile-source="source ~/.bash_profile"
+
+alias ddd="rm -fdR ~/Library/Developer/Xcode/DerivedData/*"
+alias dddls="ls ~/Library/Developer/Xcode/DerivedData | wc -l"
+
+# RUBY
+alias source_rvm="source '$HOME/.rvm/scripts/rvm'"
+
+# XCODE
+alias xcode_disable_indexing="defaults write com.apple.dt.XCode IDEIndexDisable"
+
+# MISC
+alias plant="java -jar /Users/radoslawcieciwa/Development/scripting/plantuml.jar"
+alias correct="swiftlint autocorrect"
+alias swiftlint_warnings="swiftlint 2>&1 | grep 'Violation\|warning'"
+alias merge_conflicts_in_sublime="git diff --name-only --diff-filter=U | xargs -L1 sublime"
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+# Source: https://github.com/mathiasbynens/dotfiles
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Show/hide hidden files in Finder
+# Source: https://github.com/mathiasbynens/dotfiles
+alias hidden_files_show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hidden_files_hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Hide/show all desktop icons (useful when presenting)
+# Source: https://github.com/mathiasbynens/dotfiles
+alias desktop_files_hide="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias desktop_files_show="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
